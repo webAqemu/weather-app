@@ -1,0 +1,11 @@
+.app {
+    border-radius: 20px;
+    box-shadow: 5px 5px 40px rgba(150, 176, 215, 0.5);
+    padding: 20px 30px;
+}
+
+.title {
+    font-size: 55px;
+    margin: 0 0 20px;
+    text-align: center;
+}

@@ -1,0 +1,14 @@
+.search {
+    margin-bottom: 16px;
+}
+
+.search__input {
+    padding: 10px 16px 8px;
+    font-size: 24px;
+    width: 100%;
+    outline: none;
+    border-radius: 15px;
+    border: none;
+    font-family: inherit;
+    margin-bottom: 20px;
+}
