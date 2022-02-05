@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Location from '../location';
 import Search from '../search';
 import styles from './styles.module.css';

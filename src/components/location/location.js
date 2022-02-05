@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { usePosition } from '../../hooks/usePosition';
 import styles from './styles.module.css';
 
-function Location({ city, dispatch }) {
+function Location({ city }) {
     const data = {};
 
     if (city.length > 1 && !(typeof city[0] === 'string')) {
@@ -25,6 +24,7 @@ function Location({ city, dispatch }) {
                 <img
                     src={'https:' + data.img}
                     className={styles.location__img}
+                    lat="weather icon"
                 />
             </div>
         );
