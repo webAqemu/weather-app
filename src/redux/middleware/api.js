@@ -3,23 +3,34 @@ import { API_KEY } from '../constants';
 export default (store) => (next) => async (action) => {
     const { type, curCity } = action;
     if (!curCity) return next(action);
-    const data = await fetch(
-        `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${curCity}&aqi=no`
-    ).then((res) => res.json());
+    try {
+        const response = await fetch(
+            `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${curCity}&aqi=no`
+        );
+        if (!response.ok) {
+            throw new SyntaxError('please enter existing city');
+        }
+        const data = await response.json();
+        const cityData = [
+            ['name', data.location.name],
+            ['country', data.location.country],
+            ['lat', data.location.lat],
+            ['lon', data.location.lon],
+            ['temp', data.current.temp_c],
+            ['feelslike', data.current.feelslike_c],
+            ['img', data.current.condition.icon],
+            ['text', data.current.condition.text],
+        ];
 
-    if (data.error)
-        return next({ type, curCity: ['Error', data.error.message] });
+        next({ type, curCity: cityData });
+    } catch (error) {
+        next({ type, curCity: ['Error', error.message] });
+    }
 
-    const cityData = [
-        ['name', data.location.name],
-        ['country', data.location.country],
-        ['lat', data.location.lat],
-        ['lon', data.location.lon],
-        ['temp', data.current.temp_c],
-        ['feelslike', data.current.feelslike_c],
-        ['img', data.current.condition.icon],
-        ['text', data.current.condition.text],
-    ];
+    // const data = await fetch(
+    //     `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${curCity}&aqi=no`
+    // ).then((res) => res.json());
 
-    next({ type, curCity: cityData });
+    // if (data.error)
+    //     return next({ type, curCity: ['Error', data.error.message] });
 };
