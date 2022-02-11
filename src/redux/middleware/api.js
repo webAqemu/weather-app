@@ -5,10 +5,10 @@ export default (store) => (next) => async (action) => {
     if (!curCity) return next(action);
     try {
         const response = await fetch(
-            `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${curCity}&aqi=no`
+            `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${curCity}&aqi=no`
         );
         const astro = await fetch(
-            `http://api.weatherapi.com/v1/astronomy.json?key=${API_KEY}&q=${curCity}&aqi=no`
+            `https://api.weatherapi.com/v1/astronomy.json?key=${API_KEY}&q=${curCity}&aqi=no`
         );
         if (!response.ok && !astro.ok) {
             throw new SyntaxError('please enter existing city');
