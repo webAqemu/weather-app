@@ -3,10 +3,11 @@ export default function findSunPosition(sunRise, sunSet, time) {
     const end = _getMinutes(sunSet.split(' ')[0], true);
     const wastedTime = _getMinutes(time);
     const completedX = _completedPart(start, end, wastedTime);
+    const completedDeg = _findDegrees(completedX);
     const timeEn = _timeEn(time);
     //const completedY = _findCoordY(completedX);
     //return { completedX, completedY };
-    return { completedX, timeEn };
+    return { completedX, timeEn, completedDeg };
 }
 
 function _getMinutes(time, evening = false) {
@@ -36,6 +37,10 @@ function _findCoordY(coordX) {
 
     const Y = Math.sqrt(radius ** 2 - X ** 2);
     return Y;
+}
+
+function _findDegrees(percent) {
+    return percent === 0 ? -210 : (+percent / 100) * 180;
 }
 
 function _timeEn(time) {
