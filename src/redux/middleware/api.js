@@ -7,10 +7,14 @@ export default (store) => (next) => async (action) => {
         const response = await fetch(
             `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${curCity}&aqi=no`
         );
-        if (!response.ok) {
+        const astro = await fetch(
+            `http://api.weatherapi.com/v1/astronomy.json?key=${API_KEY}&q=${curCity}&aqi=no`
+        );
+        if (!response.ok && !astro.ok) {
             throw new SyntaxError('please enter existing city');
         }
         const data = await response.json();
+        const astroData = await astro.json();
         const cityData = [
             ['name', data.location.name],
             ['country', data.location.country],
@@ -20,17 +24,13 @@ export default (store) => (next) => async (action) => {
             ['feelslike', data.current.feelslike_c],
             ['img', data.current.condition.icon],
             ['text', data.current.condition.text],
+            ['sunrise', astroData.astronomy.astro.sunrise],
+            ['sunset', astroData.astronomy.astro.sunset],
+            ['time', data.location.localtime],
         ];
 
         next({ type, curCity: cityData });
     } catch (error) {
         next({ type, curCity: ['Error', error.message] });
     }
-
-    // const data = await fetch(
-    //     `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${curCity}&aqi=no`
-    // ).then((res) => res.json());
-
-    // if (data.error)
-    //     return next({ type, curCity: ['Error', data.error.message] });
 };

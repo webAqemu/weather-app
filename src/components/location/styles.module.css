@@ -53,7 +53,11 @@
     position: absolute;
     width: 250px;
     opacity: 0.2;
-    bottom: 0;
+    top: 85px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.location__feels {
+    margin-bottom: 30px;
 }

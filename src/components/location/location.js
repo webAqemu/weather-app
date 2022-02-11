@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styles from './styles.module.css';
+import Sun from './sun';
 
 function Location({ city }) {
     const data = {};
@@ -25,6 +26,11 @@ function Location({ city }) {
                     src={'https:' + data.img}
                     className={styles.location__img}
                     lat="weather icon"
+                />
+                <Sun
+                    sunrise={data.sunrise}
+                    sunset={data.sunset}
+                    curTime={data.time.split(' ')[1]}
                 />
             </div>
         );
